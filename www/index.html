@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title>Blank App</title>
-        <link rel="stylesheet" href="css/styles.css">
-    </head>
-    <body>
-        <script type="text/javascript" src="cordova.js"></script>
-        <h2 id="readme"></h2>
-        <button class="button" onclick="popup()">Wpisz tekst</button>
-        <button class="button" onclick="speak()">Przeczytaj</button>
-        <button class="button" onclick="speakAPI()">Przeczytaj wykorzystując API</button>
-        <button class="button" onclick="vibration()">Vibration button</button>
-        <button class="button" onclick="gyro()">Gyro button</button>
-        <div id="accelerometer">Waiting for accelerometer...</div>
-    </body>
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Blank App</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- <script type="text/javascript" src="cordova.js"></script> -->
+    <h2 id="readme"></h2>
+    <button class="button" onclick="popup()">Wpisz tekst</button>
+    <button class="button" onclick="speak()">Przeczytaj</button>
+    <button class="button" onclick="speakAPI()">Przeczytaj wykorzystując API</button>
+    <button class="button" onclick="vibration()">Vibration button</button>
+    <button class="button" onclick="gyro()">Gyro button</button>
+    <button class="button" onclick="phoneCall()">Zadzwoń</button>
+    <div id="accelerometer">Waiting for accelerometer...</div>
+    <br>
+    <br>
+
+    <h3>Firebase</h3>
+    <textarea id="fbText" placeholder="Wpisz dane"></textarea><br>
+    <button class="button" id="submitButton" onclick="submitClick()">Firebase</button>
+
+
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
 <script src="js/scripts.js"></script>
 <script src='https://code.responsivevoice.org/responsivevoice.js'> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
 </html>
