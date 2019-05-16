@@ -20,7 +20,7 @@ function speakAPI() {
 
 
 function vibration() {
-  navigator.vibrate(1000);
+  window.navigator.vibrate(500)
 }
 
 var watchID = null;
