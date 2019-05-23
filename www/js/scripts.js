@@ -66,11 +66,11 @@ function setupPopout() {
   });
 }
 
-ffunction phoneCall() {
+function phoneCall() {
   var numerAlarmowy = "900300400";
   // location.href = "tel:+" + numerAlarmowy; THIS IS A WEB VERSION
   window.open("tel:"+numerAlarmowy);
-
+}
 
 // Here begins firebase code
 
