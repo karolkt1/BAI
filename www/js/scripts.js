@@ -57,11 +57,20 @@ function onError() {
   alert('onError!');
 }
 
+function setupPopout() {
+  cordova.plugins.notification.local.schedule({
+    title: "Tutej nazwa apki",
+    message: "Testowy pop-out",
+    foreground: true,
+    trigger: { in: 15, unit: 'second' }
+  });
+}
+
 ffunction phoneCall() {
   var numerAlarmowy = "900300400";
   // location.href = "tel:+" + numerAlarmowy; THIS IS A WEB VERSION
   window.open("tel:"+numerAlarmowy);
-}
+
 
 // Here begins firebase code
 
