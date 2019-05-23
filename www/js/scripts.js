@@ -20,7 +20,7 @@ function speakAPI() {
 
 
 function vibration() {
-  window.navigator.vibrate(500)
+  navigator.vibrate(1000);
 }
 
 var watchID = null;
@@ -57,11 +57,12 @@ function onError() {
   alert('onError!');
 }
 
-ffunction phoneCall() {
+function phoneCall() {
   var numerAlarmowy = "900300400";
   // location.href = "tel:+" + numerAlarmowy; THIS IS A WEB VERSION
   window.open("tel:"+numerAlarmowy);
 }
+
 
 // Here begins firebase code
 
@@ -92,9 +93,9 @@ var submitButton = document.getElementById("submitButton");
 
 function submitClick() {
   db.collection("Users").doc("Data").set({
-    email: "kowalski@uek.krakow.pl",
-    name: "Jan",
-    phoneNumber: "500500500"
+    email: "kowalski2@uek.krakow.pl",
+    name: "Jan2",
+    phoneNumber: "500500502"
   })
+  console.log("data sent")
 }
-
