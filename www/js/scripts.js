@@ -77,6 +77,7 @@ var firebaseConfig = {
   appId: "1:860894210224:web:b950180e478fe509"
 };
 
+
 // Initialize Firebase
 var app = firebase.initializeApp(firebaseConfig);
 db = firebase.firestore(app);
@@ -84,18 +85,78 @@ db = firebase.firestore(app);
 var textVar = document.getElementById("fbText");
 var submitButton = document.getElementById("submitButton");
 
+const auth = firebase.auth();
 
 // Legacy code for realtime database 
 // function submitClick2() {
 //   var rootRef = firebase.database().ref();
 //   rootRef.child("Text").set("This is a test value");
 // }
+//function submitClick() {
+ // var inputText = document.getElementById("text_field").value;
+//  db.collection("Users").doc().set({
+//    email: inputText
+//  })
+//  console.log("data sent")
+//}
 
 function submitClick() {
-  db.collection("Users").doc("Data").set({
-    email: "kowalski2@uek.krakow.pl",
-    name: "Jan2",
-    phoneNumber: "500500502"
+  var inputText = document.getElementById("text_field").value;
+  var inputText1 = document.getElementById("text_field1").value;
+  var inputText2 = document.getElementById("text_field2").value;
+  var das = db.collection("Users").doc();
+  das.set({
+	  Imie: inputText1
+  })
+  das.collection("Users").doc().set({
+    email: inputText,
+	miasto: inputText2
   })
   console.log("data sent")
 }
+
+// listen for auth status changes
+auth.onAuthStateChanged(user => {
+  if (user) {
+    console.log('user logged in: ', user);
+  } else {
+    console.log('user logged out');
+  }
+})
+
+const signupForm = document.querySelector('#signup-form');
+signupForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = signupForm['signup-email'].value;
+  const password = signupForm['signup-password'].value;
+
+  auth.createUserWithEmailAndPassword(email, password).then(cred => {
+    const modal = document.querySelector('#modal-signup');
+    M.Modal.getInstance(modal).close();
+    signupForm.reset();
+  });
+});
+
+// logout
+const logout = document.querySelector('#logout');
+logout.addEventListener('click', (e) => {
+  e.preventDefault();
+  auth.signOut();
+});
+
+// login
+const loginForm = document.querySelector('#login-form');
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  // get user info
+  const email = loginForm['login-email'].value;
+  const password = loginForm['login-password'].value;
+
+  // log the user in
+  auth.signInWithEmailAndPassword(email, password).then((cred) => {
+    // close the signup modal & reset form
+
+  });
+
+});
