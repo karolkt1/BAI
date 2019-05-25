@@ -10,7 +10,11 @@ class Event {
         this.userTime = userTime;
     }
 }
+
 var event1;
+// Temporary solution
+var tableOfEvents = new Array(12);
+
 function addDate() {
     userText = document.getElementById("text1").value;
     userDate = document.getElementById("date1").value;
@@ -20,6 +24,7 @@ function addDate() {
     resultBeta();
     fillCallendar();
 }
+
 
 function resultBeta() {
     var result = document.getElementById("result");
@@ -56,6 +61,8 @@ function fillCallendar() {
     } else if (userHour == 0) {
         userHour = userHour + 1;
     }
+    tableOfEvents[userHour-1]=event1;
+   
     tbl.rows[userHour].cells[1].innerHTML = userText;
 }
 
