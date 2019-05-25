@@ -58,3 +58,5 @@ function fillCallendar() {
     }
     tbl.rows[userHour].cells[1].innerHTML = userText;
 }
+
+// custom alert features, pre-mobile version
