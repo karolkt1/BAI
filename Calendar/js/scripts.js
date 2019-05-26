@@ -2,7 +2,8 @@ var userText;
 var userDate;
 var userTime;
 var myJSON;
-
+var isEditModeOn = false;
+var needAnotherColumn = true;
 class Event {
     constructor(userMessage, userDate, userTime) {
         this.userMessage = userMessage;
@@ -21,7 +22,7 @@ function addDate() {
     userTime = document.getElementById("time1").value;
     event1 = new Event(userText, userDate, userTime);
     myJSON = JSON.stringify(event1);
-    fillCalendar();
+    fillCallendar();
 }
 
 var tbl = document.getElementById("table1");
@@ -33,6 +34,14 @@ function buildTable() {
             var row = tbl.deleteRow(x);
         }
     }
+    if (isEditModeOn && needAnotherColumn) {
+        th = document.createElement('th');
+        th.innerHTML = "Delete buttons";
+        var tblforedit = document.getElementById("tableColumns")
+        tblforedit.appendChild(th)
+        needAnotherColumn = false
+    }
+
     var cell = [];
     var row = [];
 
@@ -40,6 +49,9 @@ function buildTable() {
         row[i + 1] = tbl.insertRow(-1);
         cell[i + 1] = row[i + 1].insertCell(-1);
         cell[i + 2] = row[i + 1].insertCell(0);
+        if (isEditModeOn) {
+            tbl.rows[i + 1].insertCell(2)
+        }
         cell[i + 2].innerHTML = i + 1;
         // cell[i+1].innerHTML = "random text"+i
         cell[i + 1].innerHTML = "";
@@ -47,7 +59,7 @@ function buildTable() {
 }
 buildTable();
 
-function fillCalendar() {
+function fillCallendar() {
     var userHour = parseInt(userTime);
     if (userHour > 12) {
         userHour = userHour - 12;
@@ -57,7 +69,7 @@ function fillCalendar() {
     tableOfEvents[userHour - 1] = event1;
 
     tbl.rows[userHour].cells[1].innerHTML = userText;
-    // This line is extremely important because it stores events in localStorage 
+
     storeObject(tableOfEvents);
 }
 
@@ -80,17 +92,38 @@ function jsonToEvent(jsonFile) {
 
 // Get tableOfEvents if stored in localStorage
 var magicFormula
-function rebuildCalendar() {
+
+function rebuildCallendar() {
     magicFormula = jsonToEvent(getStoredObject());
-    for (var x = 0; x < magicFormula.length; x++) {
+    for (let x = 0; x < magicFormula.length; x++) {
         if (magicFormula[x]) {
             // tbl.rows[parseInt(magicFormula[x].userTime)].cells[1].innerHTML = magicFormula[x].userMessage;
             tbl.rows[x + 1].cells[1].innerHTML = magicFormula[x].userMessage;
+            if (isEditModeOn) {
+                if (magicFormula[x].userMessage) {
+                    var button = document.createElement("button");
+                    button.innerHTML = "Remove";
+                    // HERE IS BUTTON CLASS CHANGE FOR CSS PURPOSES
+                    button.classList.add('btn-danger');
+                    button.addEventListener("click", function () {
+                        tbl.rows[x + 1].cells[2].previousElementSibling.innerHTML = "";
+                        console.log(x)
+                        tableOfEvents[x] = null;
+                        storeObject(tableOfEvents);
+                    });
+                    tbl.rows[x + 1].cells[2].appendChild(button);
+                }
+            }
         }
     }
     console.log(magicFormula);
 }
+
 function clearLocalStorage() {
     localStorage.clear();
 }
-// custom alert features, pre-mobile version
+function enableEditMode() {
+    isEditModeOn = true;
+    buildTable();
+    rebuildCallendar();
+}
