@@ -21,28 +21,21 @@
             <h1 class="top-head ">Edycja danych użytkownika</h1>
             <hr class="page">
             <div class="form">
-            <form>
-                <div class="form-group">
-                    <div class="input-icon">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon">
-                        <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Hasło"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon">
-                        <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Powtórz hasło"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Imię"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nazwisko"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Numer telefonu"> <i class="fas fa-pen"></i></div>
-                </div>
-                <button type="submit" class="btn"><a href="#">Zapisz zmiany</a></button>
-            </form>
-            </div>
+			  <div class="main-form"> 
+  <div class="input-icon"><input type="text" class="form-control" placeholder="Imię" id="text_field"><i class="fas fa-pen"></i></div>
+  <div class="input-icon"><input type="text" class="form-control" placeholder="Nazwisko" id="text_field1"><i class="fas fa-pen"></i></div>
+  <div class="input-icon"><input type="text" class="form-control" placeholder="Numer telefonu" id="text_field2"><i class="fas fa-pen"></i></div>
+  <button class="btn" id="submitButton" onclick="submitClick()">Wyślij</button>
+  </div>
 		</div>		    
 		<button type="submit" class="btn wroc float-left"><a href="strona-glowna.html">Wróć</a></button>
 	</main>
-        
     </body>
-    
+      <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/evidence.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </html>

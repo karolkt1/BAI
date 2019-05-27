@@ -87,42 +87,21 @@ var submitButton = document.getElementById("submitButton");
 
 const auth = firebase.auth();
 
-// Legacy code for realtime database 
-// function submitClick2() {
-//   var rootRef = firebase.database().ref();
-//   rootRef.child("Text").set("This is a test value");
-// }
 //function submitClick() {
- // var inputText = document.getElementById("text_field").value;
-//  db.collection("Users").doc().set({
-//    email: inputText
+//  var inputText = document.getElementById("text_field").value;
+//  var inputText1 = document.getElementById("text_field1").value;
+//  var inputText2 = document.getElementById("text_field2").value;
+//  var das = db.collection("Users").doc();
+//  das.set({
+//	  Imie: inputText1
 //  })
+//  das.collection("Users").doc().set({
+//    email: inputText,
+//	miasto: inputText2
+///  })
 //  console.log("data sent")
 //}
 
-function submitClick() {
-  var inputText = document.getElementById("text_field").value;
-  var inputText1 = document.getElementById("text_field1").value;
-  var inputText2 = document.getElementById("text_field2").value;
-  var das = db.collection("Users").doc();
-  das.set({
-	  Imie: inputText1
-  })
-  das.collection("Users").doc().set({
-    email: inputText,
-	miasto: inputText2
-  })
-  console.log("data sent")
-}
-
-// listen for auth status changes
-//auth.onAuthStateChanged(user => {
-//  if (user) {
- //   console.log('user logged in: ', user);
-//  } else {
-//    console.log('user logged out');
-//  }
-//})
 
 //const signupForm = document.querySelector('#signup-form');
 //signupForm.addEventListener('submit', (e) => {
