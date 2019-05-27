@@ -1,0 +1,80 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Blood Pressure</title>
+    <meta name="description" content="Jak żyć?">
+    <meta name="author" content="Karol">
+
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="text-center">
+        <h1>Pomiary Ciśnienia</h1>
+        <div style="width: 80%; margin-left: 10%">
+            <table class="table" id="table2">
+                <thead class="thead-dark">
+                    <tr id="tableColumns">
+                        <th scope="col">Data</th>
+                        <th scope="col">Pomiar</th>
+                    </tr>
+                    <tr>
+                        <td scope="col"id="day-3">day-3</th>
+                        <td scope="col">measurement-3</th>
+                    </tr>
+                    <tr>
+                        <td scope="col"id="day-2">day-2</th>
+                        <td scope="col">measurement-2</th>
+                    </tr>
+                    <tr>
+                        <td scope="col"id="day-1">day-1</th>
+                        <td scope="col">measurement-1</th>
+                    </tr>
+                    <tr>
+                        <td scope="col" id="day0">day0</th>
+                        <td scope="col" class="table-primary" id="measurement0">measurement0</th>
+                    </tr>
+                </thead>
+            </table>
+            <br>
+        </div>
+
+        <!-- <script src="js/scripts.js"></script> -->
+        <script>
+            var date = new Date();
+            var today = date.getDate();
+            var dayOfWeek = date.getDay();
+            var days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"]
+
+            var msrObject = document.querySelector("#measurement0");
+            msrObject.addEventListener("click", function () {
+                msrObject.innerHTML = prompt("Podaj dzisiejsze ciśnienie");
+            });
+            function mod(n, m) {
+                return ((n % m) + m) % m;
+            }
+            function fillTable() {
+                document.querySelector("#day0").innerHTML = days[mod(dayOfWeek,7)];
+                document.querySelector("#day-1").innerHTML = days[mod(dayOfWeek-1,7)];
+                document.querySelector("#day-2").innerHTML = days[mod(dayOfWeek-2,7)];
+                document.querySelector("#day-3").innerHTML = days[mod(dayOfWeek-3,7)];
+
+            }
+
+            fillTable();
+        </script>
+</body>
+
+</html>
