@@ -25,15 +25,14 @@
             <form>
                 <h3>Na poniższy adres e-mail zostanie wysłana wiadomość umożliwiająca odzyskanie hasła</h3>
                 <div class="form-group">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Podaj e-mail">
+                    <input type="email" class="form-control" id="emailreset" aria-describedby="emailHelp" placeholder="Podaj e-mail">
                 </div>
-                <button type="submit" class="btn" id="emailr"><a href="#" >Odzyskaj hasło</a></button>
             </form>		
+			<button type="submit" class="btn" id="emailr" onclick="resetPass()" name="verify-email">Odzyskaj hasło</button> 
         </div>
 		<button type="submit" class="btn float-left wroc"><a href="index.html">Wróć</a></button>
         </div>
-	</main>
-        
+	</main>       
     </body>
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
