@@ -31,20 +31,20 @@
                         <th scope="col">Pomiar</th>
                     </tr>
                     <tr>
-                        <td scope="col"id="day-3">day-3</th>
-                        <td scope="col">measurement-3</th>
+                        <td scope="col" id="day-3">day-3</th>
+                        <td scope="col" id="measurement-3">fix</th>
                     </tr>
                     <tr>
-                        <td scope="col"id="day-2">day-2</th>
-                        <td scope="col">measurement-2</th>
+                        <td scope="col" id="day-2">day-2</th>
+                        <td scope="col" id="measurement-2">fix</th>
                     </tr>
                     <tr>
-                        <td scope="col"id="day-1">day-1</th>
-                        <td scope="col">measurement-1</th>
+                        <td scope="col" id="day-1">day-1</th>
+                        <td scope="col" id="measurement-1">fix</th>
                     </tr>
-                    <tr>
+                    <tr class="table-primary">
                         <td scope="col" id="day0">day0</th>
-                        <td scope="col" class="table-primary" id="measurement0">measurement0</th>
+                        <td scope="col" id="measurement0">Naciśnij aby dodać pomiar</th>
                     </tr>
                 </thead>
             </table>
@@ -53,27 +53,92 @@
 
         <!-- <script src="js/scripts.js"></script> -->
         <script>
+            class BloodPressure {
+                constructor(userPressure, userDate) {
+                    this.userPressure = userPressure;
+                    this.userDate = userDate;
+                }
+            }
+
+            function formatDate(date) {
+                var day = date.getDate();
+                if (day < 10) { day = "0" + day.toString(10) }
+                var monthIndex = date.getMonth();
+                if (monthIndex < 10) { monthIndex = "0" + monthIndex.toString(10) }
+                var year = date.getFullYear();
+                return year + "-" + monthIndex + "-" + day;
+            }
+
             var date = new Date();
             var today = date.getDate();
             var dayOfWeek = date.getDay();
             var days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"]
 
             var msrObject = document.querySelector("#measurement0");
+            var dateCalendarFormat = formatDate(date);
+            var todaysBloodPressure;
+
             msrObject.addEventListener("click", function () {
-                msrObject.innerHTML = prompt("Podaj dzisiejsze ciśnienie");
+                var re = new RegExp('ab+c');
+                var userInput = prompt("Podaj dzisiejsze ciśnienie");
+                msrObject.innerHTML = userInput;
+                todaysBloodPressure = new BloodPressure(userInput, dateCalendarFormat);
+                storePressure(todaysBloodPressure);
             });
             function mod(n, m) {
                 return ((n % m) + m) % m;
             }
             function fillTable() {
-                document.querySelector("#day0").innerHTML = days[mod(dayOfWeek,7)];
-                document.querySelector("#day-1").innerHTML = days[mod(dayOfWeek-1,7)];
-                document.querySelector("#day-2").innerHTML = days[mod(dayOfWeek-2,7)];
-                document.querySelector("#day-3").innerHTML = days[mod(dayOfWeek-3,7)];
+                var date = new Date();
+
+                document.querySelector("#day0").innerHTML = date.getDate().toString(10) + " " + days[mod(dayOfWeek, 7)] + " (Dzisiaj)";
+                document.querySelector("#day-1").innerHTML = (date.getDate() - 1).toString(10) + " " + days[mod(dayOfWeek - 1, 7)];
+                document.querySelector("#day-2").innerHTML = (date.getDate() - 2).toString(10) + " " + days[mod(dayOfWeek - 2, 7)];
+                document.querySelector("#day-3").innerHTML = (date.getDate() - 3).toString(10) + " " + days[mod(dayOfWeek - 3, 7)];
 
             }
 
             fillTable();
+
+            function storePressure(param1) {
+                // Put the object into storage
+                localStorage.setItem('storedObject2', JSON.stringify(param1));
+            }
+
+            function getStoredPressure() {
+                // Retrieve the object from storage
+                var retrievedObject = localStorage.getItem('storedObject2');
+                return retrievedObject;
+            }
+
+            var parsedJSON;
+            function jsonToBloodPressure(jsonFile) {
+                parsedJSON = JSON.parse(jsonFile);
+                return parsedJSON;
+            }
+            var savedValues = jsonToBloodPressure(getStoredPressure());
+            tableOfPressures = new Array();
+            for (var x = 0; x < tableOfPressures.length; x++){
+
+            }
+            function fillPreviousDays(){
+                if (dateCalendarFormat==savedValues.userDate){
+                    msrObject.innerHTML=savedValues.userPressure;
+                }
+                var dayX = savedValues.userDate.charAt(8)+savedValues.userDate.charAt(9);
+                dayX=parseInt(dayX, 10);
+                if ((date.getDate() -1 ) == dayX) {
+                    document.querySelector("#measurement-1").innerHTML= savedValues.userPressure;
+                }
+                if ((date.getDate() -2 ) == dayX) {
+                    document.querySelector("#measurement-2").innerHTML= savedValues.userPressure;
+                }
+                if ((date.getDate() -3 ) == dayX) {
+                    document.querySelector("#measurement-3").innerHTML= savedValues.userPressure;
+                }
+
+            }
+            fillPreviousDays()
         </script>
 </body>
 
