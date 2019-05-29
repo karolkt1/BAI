@@ -178,7 +178,7 @@
         var magicFormula
 
         function rebuildCallendar() {
-            // 
+            cleanTable();
             // magicFormula = jsonToEvent(getStoredObject());
             magicFormula = getSelectedDate();
             for (let x = 0; x < magicFormula.length; x++) {
@@ -205,6 +205,11 @@
                 }
             }
             console.log(magicFormula);
+        }
+        function cleanTable(){
+            for (let x = 1; x <= tableOfEvents.length; x++){
+                tbl.rows[x ].cells[1].innerHTML = "";
+            }
         }
 
         function clearLocalStorage() {
