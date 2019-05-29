@@ -44,15 +44,32 @@
                     </tr>
                     <tr class="table-primary">
                         <td scope="col" id="day0">day0</th>
-                        <td scope="col" id="measurement0">Naciśnij aby dodać pomiar</th>
+                        <td scope="col" id="measurement-0">Naciśnij aby dodać pomiar</th>
                     </tr>
                 </thead>
             </table>
             <br>
         </div>
-
+        <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
         <!-- <script src="js/scripts.js"></script> -->
         <script>
+            var db;
+            var firebaseConfig = {
+                apiKey: "AIzaSyBP8Un_hWobMbOE5HgU41Cwne7L7vMTVhw",
+                authDomain: "bogate-aplikacje-internetowe.firebaseapp.com",
+                databaseURL: "https://bogate-aplikacje-internetowe.firebaseio.com",
+                projectId: "bogate-aplikacje-internetowe",
+                storageBucket: "bogate-aplikacje-internetowe.appspot.com",
+                messagingSenderId: "860894210224",
+                appId: "1:860894210224:web:b950180e478fe509"
+            };
+
+            // Initialize Firebase
+            var app = firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore(app);
+
             class BloodPressure {
                 constructor(userPressure, userDate) {
                     this.userPressure = userPressure;
@@ -63,7 +80,7 @@
             function formatDate(date) {
                 var day = date.getDate();
                 if (day < 10) { day = "0" + day.toString(10) }
-                var monthIndex = date.getMonth();
+                var monthIndex = date.getMonth() + 1;
                 if (monthIndex < 10) { monthIndex = "0" + monthIndex.toString(10) }
                 var year = date.getFullYear();
                 return year + "-" + monthIndex + "-" + day;
@@ -74,7 +91,7 @@
             var dayOfWeek = date.getDay();
             var days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"]
 
-            var msrObject = document.querySelector("#measurement0");
+            var msrObject = document.querySelector("#measurement-0");
             var dateCalendarFormat = formatDate(date);
             var todaysBloodPressure;
 
@@ -83,6 +100,7 @@
                 var userInput = prompt("Podaj dzisiejsze ciśnienie");
                 msrObject.innerHTML = userInput;
                 todaysBloodPressure = new BloodPressure(userInput, dateCalendarFormat);
+                createEntry(todaysBloodPressure);
                 storePressure(todaysBloodPressure);
             });
             function mod(n, m) {
@@ -118,25 +136,78 @@
             }
             var savedValues = jsonToBloodPressure(getStoredPressure());
             tableOfPressures = new Array();
-            for (var x = 0; x < tableOfPressures.length; x++){
+            for (var x = 0; x < tableOfPressures.length; x++) {
 
             }
-            function fillPreviousDays(){
-                if (dateCalendarFormat==savedValues.userDate){
-                    msrObject.innerHTML=savedValues.userPressure;
-                }
-                var dayX = savedValues.userDate.charAt(8)+savedValues.userDate.charAt(9);
-                dayX=parseInt(dayX, 10);
-                if ((date.getDate() -1 ) == dayX) {
-                    document.querySelector("#measurement-1").innerHTML= savedValues.userPressure;
-                }
-                if ((date.getDate() -2 ) == dayX) {
-                    document.querySelector("#measurement-2").innerHTML= savedValues.userPressure;
-                }
-                if ((date.getDate() -3 ) == dayX) {
-                    document.querySelector("#measurement-3").innerHTML= savedValues.userPressure;
-                }
+            var testUserMail = "jan.kowalski@gmail.com";
 
+            // This function send event from tableOfEvents to collection named after date.
+            function createEntry(param2) {
+
+                // After creating account we create user collection
+                db.collection("Dziennik pacjentow Karol").doc(testUserMail).set({})
+
+                if (param2) {
+                    db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(todaysBloodPressure.userDate).doc("Pressure").set({
+                        Pressure: todaysBloodPressure.userPressure,
+                        // Date: event1.userDate,
+                        // Time: event1.userTime
+                    })
+                }
+                console.log("data sent to firestore")
+            }
+            var last4Days = new Array(4);
+
+            function getEntriesFromFirestore() {
+                var day1 = new Date();
+                day1.setDate(day1.getDate() - 1);
+                var day2 = new Date();
+                day2.setDate(day2.getDate() - 2);
+                var day3 = new Date();
+                day3.setDate(day3.getDate() - 3);
+
+                var docRef = db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(formatDate(date));
+                docRef.doc("Pressure").get().then(function (doc) {
+                    if (doc.exists) {
+                        last4Days[0] = doc.data();
+                    }
+                })
+                var docRef = db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(formatDate(day1));
+                docRef.doc("Pressure").get().then(function (doc) {
+                    if (doc.exists) {
+                        last4Days[1] = doc.data();
+                    }
+                })
+                var docRef = db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(formatDate(day2));
+                docRef.doc("Pressure").get().then(function (doc) {
+                    if (doc.exists) {
+                        last4Days[2] = doc.data();
+                    }
+                })
+                var docRef = db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(formatDate(day3));
+                docRef.doc("Pressure").get().then(function (doc) {
+                    if (doc.exists) {
+                        last4Days[3] = doc.data();
+                    }
+                })
+            }
+
+            function fillPreviousDays() {
+                getEntriesFromFirestore();
+                setTimeout(function () {
+                    if (last4Days[0]) {
+                        document.querySelector("#measurement-0").innerHTML = last4Days[0].Pressure;
+                    }
+                    if (last4Days[1]) {
+                        document.querySelector("#measurement-1").innerHTML = last4Days[1].Pressure;
+                    }
+                    if (last4Days[2]) {
+                        document.querySelector("#measurement-2").innerHTML = last4Days[2].Pressure;
+                    }
+                    if (last4Days[3]) {
+                        document.querySelector("#measurement-3").innerHTML = last4Days[1].Pressure;
+                    }
+                }, 500);
             }
             fillPreviousDays()
         </script>
