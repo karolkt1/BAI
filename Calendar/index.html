@@ -253,7 +253,7 @@
         var jsObjArray = new Array(24);
 
         function getSelectedDate() {
-
+            cleanTable();
             var docRef = db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(document.getElementById("date1").value);
 
             for (let x = 0; x < 24; x++) {
@@ -262,7 +262,11 @@
                 
                 docRef.doc(index).get().then(function (doc) {
                     if (doc.exists){
+                        if (x== 0){
+                            jsObjArray[23] = doc.data();
+                        } else{
                     jsObjArray[x] = doc.data();
+                        }
                     }
                 })
             }
