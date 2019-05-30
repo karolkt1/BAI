@@ -15,29 +15,35 @@
 </head>
 
     <body>
+	<div class="container">
     <main id="main">
-		<div id="login-form">
+		<div id="modal-singup">
             <i class="fas fa-file-signature fa-3x float-right label"></i>
             <h1 class="top-head ">Rejestarcja</h1>
             <hr class="page">
             <div class="form">
-            <form>
-                <div class="form-group rejestracja">
-                    <div class="input-icon"><input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon"><input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Hasło"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon"><input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Powtórz hasło"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon"><input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Imię"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon"><input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nazwisko"> <i class="fas fa-pen"></i></div>
-                    <div class="input-icon"><input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Numer telefonu"> <i class="fas fa-pen"></i></div>
-                    <small>*Wymagane pola</small>
+            <form id="signup-form">
+                <div class="input-field">
+                    <div class="input-icon"><input type="email" class="form-control" id="signup-email" aria-describedby="emailHelp" placeholder="E-mail"> </div>
+                    <div class="input-icon"><input type="password" class="form-control" id="signup-password" aria-describedby="emailHelp" placeholder="Hasło"> </div>
+					<div class="input-icon"><input type="password" class="form-control" id="signup-repeat" aria-describedby="emailHelp" placeholder="Powtórz hasło"> </div>
+					<div class="input-icon"><input type="text" class="form-control" id="signup-imie" aria-describedby="emailHelp" placeholder="Imie"> </div>
+					<div class="input-icon"><input type="text" class="form-control" id="signup-nazwisko" aria-describedby="emailHelp" placeholder="Nazwisko"> </div>
+					<div class="input-icon"><input type="number" class="form-control" id="signup-numer" name="tentacles" min="100000000" maxlength="9" aria-describedby="emailHelp" placeholder="Telefon"> </div>
                 </div>
-                <button type="submit" class="btn"><a href="#">Założ konto</a></button>
+                <button type="submit" class="btn">Założ konto</button>
             </form>
             </div>
 		</div>		    
 		<button type="submit" class="btn wroc float-left"><a href="index.html">Wróć</a></button>
 	</main>
-        
+	</div>
     </body>
-    
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/rejestracja.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>       
 </html>
