@@ -24,8 +24,14 @@
 			  <div class="main-form"> 
   <div class="input-icon"><input type="text" class="form-control" placeholder="Imię" id="text_field"><i class="fas fa-pen"></i></div>
   <div class="input-icon"><input type="text" class="form-control" placeholder="Nazwisko" id="text_field1"><i class="fas fa-pen"></i></div>
-  <div class="input-icon"><input type="text" class="form-control" placeholder="Numer telefonu" id="text_field2"><i class="fas fa-pen"></i></div>
+  <div class="input-icon"><input type="number" class="form-control" name="tentacles" min="100000000" placeholder="Numer" maxlength="9" aria-describedby="emailHelp" id="text_field2"><i class="fas fa-pen"></i></div>
   <button class="btn" id="submitButton" onclick="submitClick()">Wyślij</button>
+  </div>
+  <div id="password-reset">
+  <h1 class="top-head">Zmiana hasła</h1>
+  <div class="input-icon"><input type="password" class="form-control" placeholder="Stare hasło" id="currentpass"><i class="fas fa-pen"></i></div>
+  <div class="input-icon"><input type="password" class="form-control" placeholder="Nowe hasło" id="resetpass"><i class="fas fa-pen"></i></div>
+  <button class="btn" id="resetButton" onclick="currentClick()">Zmień hasło</button>
   </div>
 		</div>		    
 		<button type="submit" class="btn wroc float-left"><a href="strona-glowna.html">Wróć</a></button>
