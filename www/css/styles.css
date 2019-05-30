@@ -232,6 +232,26 @@ main.calendar button.usun:focus{
 
 /* Cisnienie */
  
-table{
+table.cisnienie{
     margin-top: 50px;
+}
+
+table.cisnienie tr td{
+    width:50%;
+    padding: 20px;
+    font-size: 1.04rem;
+    
+}
+
+table.cisnienie tr td:nth-child(odd){
+    text-align: left !important;
+    color: #00B2EE;
+}
+table.cisnienie tr.last td:nth-child(even){
+    background-color: rgba(0, 178, 238, 0.1);
+    font-weight: 500;
+}
+
+table.cisnienie #tableColumns{
+    display: none;
 }
