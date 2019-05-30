@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -21,8 +22,12 @@
 </head>
 
 <body>
+    <main>
+    <div class="container">
     <div class="text-center">
-        <h1>Pomiary Ciśnienia</h1>
+        <i class="fas fa-bell label float-right"></i>
+		<h1 class="top-head ">Pomiary ciśnienia</h1>
+        <hr class="page">
         <div style="width: 80%; margin-left: 10%">
             <table class="table" id="table2">
                 <thead class="thead-dark">
@@ -50,6 +55,11 @@
             </table>
             <br>
         </div>
+
+    <button type="submit" class="btn wroc float-left"><a href="strona-glowna.html">Wróć</a></button>
+</div>
+</div>
+</main>
         <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>

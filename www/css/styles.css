@@ -43,6 +43,11 @@ button a:hover,
 button a:checked{
     color: black;
     text-decoration: none;
+     
+}
+
+button:hover{
+    background-color: #62c1e8;
 }
 
 button{
@@ -50,6 +55,7 @@ button{
     border-radius: 25px !important;
     margin: 25px 15px;
     color: white;
+    border:none;
 }
 
 button a{
@@ -152,3 +158,80 @@ div.rejestracja small{
     color: red;
 }
 
+/* Calendar */
+
+div.modal{
+    
+    font-weight: 500; 
+    height: unset;
+}
+
+div.modal h4{
+    margin: 0 auto;
+    color: #00B2EE;
+}
+
+div.modal a.close-modal{
+    top: 1.5px;
+    right: 1.5px;
+}
+
+div.modal .modal-footer a{
+    padding: 6px 45px;
+    border-radius: 20px;
+    color: white;
+    background-color: #00B2EE;
+    margin: 0 auto;
+}
+.guzik{
+    margin:10px 0 30px;
+    padding: 5px;
+}
+main.calendar h3{
+    font-size: 1rem;
+    margin-top: 55px;
+}
+
+main.calendar h5{
+    font-weight: 400;
+    margin-top: 55px;
+}
+
+main.calendar table{
+    margin: 3% 0;
+}
+
+main.calendar table th{
+    border-color: #00B2EE;
+    
+}
+
+main.calendar table th.czas{
+    width: 30%;
+}
+
+main.calendar table td:nth-child(even){
+    color: #00B2EE;
+}
+
+main.calendar .hide{
+    display: none;
+}
+
+main.calendar button.usun{
+    background-color: #d9534f;
+    padding: 5px 45px;
+    font-weight: 500;
+}
+main.calendar button.usun:hover{
+    background-color: #ef7e7a;
+}    
+main.calendar button.usun:focus{
+    outline: 1px dotted;
+}
+
+/* Cisnienie */
+ 
+table{
+    margin-top: 50px;
+}

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -21,43 +22,69 @@
 </head>
 
 <body>
+    <main class="calendar">
+        <div class="container">
     <div class="text-center">
-        <h1>Calendar</h1>
-        <!-- <textarea placeholder="Wpisz dane" id="text1"></textarea><br> -->
-        Podaj datę<br>
+        <i class=" label float-right"></i>
+		<h1 class="top-head "></h1>
+        <hr class="page">
+        <h5 class="h5">Tu możesz przegłądać swój kalendarz wydarzeń. <br>
+        Dla zmian <a href="strona-glowna.html">wróc do głównego menu</a> i wejdźć do strony edycji kalendarza.</h5>
+        <div class="podaj-data hide"><h3>Podaj datę</h3>
         <input type="date" id="date1" oninput="getSelectedDate()"><br><br>
-        <!-- Podaj godzinę<br> -->
-        <!-- <input type="time" id="time1"><br><br> -->
-        <!-- <button onclick="addDate()" class="btn btn-primary">Add to Calendar</button> -->
-        <!-- <button onclick="addDate()" class="glx-button">Add to Calendar</button><br><br> -->
-        <!-- <button onclick="buildTable()" class="glx-button">Create Table</button> -->
-        <button class="glx-button"><a href="#ex1" rel="modal:open">Dodaj event</a></button><br>
-        <button type="button" onclick="rebuildCallendar()" class="btn btn-primary">Rebuild Calendar</button>
+        <button class="glx-button guzik"><a href="#ex1" rel="modal:open">Dodaj wydarzenie</a></button>
+        </div>    
+<!--        <button type="button" onclick="rebuildCallendar()" class="btn btn-primary">Rebuild Calendar</button>
         <button type="button" onclick="clearLocalStorage()" class="btn btn-warning">Clear localStorage</button>
         <button type="button" onclick="enableEditMode()" class="btn btn-warning">Edit Mode</button>
-        <br><br>
+        <br><br> -->
     </div>
-    <div style="width: 80%; margin-left: 10%">
+    <div class="table" >
         <table class="table" id="table1">
-            <thead class="thead-dark">
+            <thead class="">
                 <tr id="tableColumns">
-                    <th scope="col">Godzina</th>
-                    <th scope="col">Info</th>
+                    <th class="czas" scope="col">Godzina</th>
+                    <th class="info" scope="col">Informacja</th>
                 </tr>
             </thead>
         </table>
         <br>
     </div>
+        
+        
 
     <!-- Here begins the risky part -->
-    <div id="ex1" class="modal text-center" style="height: 50%">
+ <!--  <div id="ex1" class="window modal text-center" style="height: 50%">
         Co chcesz zapisać?<br>
         <textarea placeholder="Wpisz dane" id="text1"></textarea><br>
         Podaj godzinę<br>
         <input type="time" id="time1"><br>
 
         <a href="#" rel="modal:close" onclick="addDate()">Save & close</a>
+    </div> 
+ -->   
+ <div id="myModalBox" class="modal-fade">
+  <div class="modal-dialog">
+    <div id="ex1" class="window modal text-center">
+      <div class="modal-header">
+        <h4 class="modal-title">Dodaj wydarzenie do kalendarza</h4>
+      </div>
+      
+      <div class="modal-body">
+        <p>Nazwa wydarzenia</p>
+        <textarea placeholder="Wpisz nazwę" id="text1"></textarea>
+        <p>Podaj godzinę</p>
+        <input type="time" id="time1">
+      </div>
+      
+      <div class="modal-footer">
+        <a href="#" rel="modal:close" onclick="addDate()">Save & close</a>
+      </div>
     </div>
+  </div>
+</div>
+        </div>
+        </main>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
@@ -68,7 +95,39 @@
         var myJSON;
         var isEditModeOn = false;
         var needAnotherColumn = true;
+        var visitMode = false;
 
+        function getParamsFromUrl() {
+            var url_string = window.location.href; //window.location.href
+            var url = new URL(url_string);
+            var mode = url.searchParams.get("mode");
+            var edit = url.searchParams.get("edit");
+            if ( mode == "wizyty"){
+                visitMode = true;
+            }
+            if (edit == "true"){
+                isEditModeOn= true;
+            }
+            var zmiennaTytul = document.querySelector("h1");
+            var podaj_data = document.querySelector(".podaj-data");
+            if( mode == "leki"){
+                zmiennaTytul.innerHTML = "Przegląd Leków"
+                $("i").addClass("fas fa-pills");
+            }
+            if( mode == "wizyty"){
+                zmiennaTytul.innerHTML = "Przegląd Wizyt";
+                $("i").addClass("fas fa-user-md");
+            }
+            if( edit == "true"){
+                $(".podaj-data").removeClass("hide");
+                $(".h5").addClass("hide");
+                $("i").addClass("fas fa-cog");
+            }
+        }
+        
+        getParamsFromUrl();
+        
+        
 
         class Event {
             constructor(userMessage, userDate, userTime) {
@@ -77,6 +136,8 @@
                 this.userTime = userTime;
             }
         }
+        
+        
 
         var event1;
 
@@ -118,7 +179,7 @@
             }
             if (isEditModeOn && needAnotherColumn) {
                 th = document.createElement('th');
-                th.innerHTML = "Delete buttons";
+                th.innerHTML = "Usunąć wydarzenie";
                 var tblforedit = document.getElementById("tableColumns")
                 tblforedit.appendChild(th)
                 needAnotherColumn = false
@@ -184,31 +245,31 @@
             for (let x = 0; x < magicFormula.length; x++) {
                 if (magicFormula[x]) {
                     // tbl.rows[parseInt(magicFormula[x].userTime)].cells[1].innerHTML = magicFormula[x].userMessage;
-                   // be careful rows+1
-                    tbl.rows[x ].cells[1].innerHTML = magicFormula[x].userMessage;
+                    // be careful rows+1
+                    tbl.rows[x].cells[1].innerHTML = magicFormula[x].userMessage;
                     if (isEditModeOn) {
                         if (magicFormula[x].userMessage) {
                             var button = document.createElement("button");
-                            button.innerHTML = "Remove";
+                            button.innerHTML = "Usunąć";
                             // HERE IS BUTTON CLASS CHANGE FOR CSS PURPOSES
-                            button.classList.add('btn-danger');
+                            button.classList.add('usun');
                             button.addEventListener("click", function () {
                                 // be careful rows+1
-                                tbl.rows[x ].cells[2].previousElementSibling.innerHTML = "";
+                                tbl.rows[x].cells[2].previousElementSibling.innerHTML = "";
                                 console.log(x)
                                 tableOfEvents[x] = null;
                                 storeObject(tableOfEvents);
                             });
-                            tbl.rows[x ].cells[2].appendChild(button);
+                            tbl.rows[x].cells[2].appendChild(button);
                         }
                     }
                 }
             }
             console.log(magicFormula);
         }
-        function cleanTable(){
-            for (let x = 1; x <= tableOfEvents.length; x++){
-                tbl.rows[x ].cells[1].innerHTML = "";
+        function cleanTable() {
+            for (let x = 1; x <= tableOfEvents.length; x++) {
+                tbl.rows[x].cells[1].innerHTML = "";
             }
         }
 
@@ -223,6 +284,11 @@
 
         // Cloud Firestore part
 
+
+        // JAREK TUTAJ JEST PRZYKŁĄDOWY USER MUSISZ DOBRAĆ SIĘ DO REALNEGO Z AUTH !!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!!!
+        // var testUserMail = "jan.kowalski@gmail.com"
 
         // This function send event from tableOfEvents to collection named after date.
         function createEntry(param2) {
@@ -254,13 +320,13 @@
             for (let x = 0; x < 24; x++) {
                 let index = x + 1;
                 index = x.toString();
-                
+
                 docRef.doc(index).get().then(function (doc) {
-                    if (doc.exists){
-                        if (x== 0){
+                    if (doc.exists) {
+                        if (x == 0) {
                             jsObjArray[23] = doc.data();
-                        } else{
-                    jsObjArray[x] = doc.data();
+                        } else {
+                            jsObjArray[x] = doc.data();
                         }
                     }
                 })
@@ -268,14 +334,21 @@
             return jsObjArray;
         }
         var testUserMail;
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                     testUserMail = firebase.auth().currentUser.email;
-                    //  fillPreviousDays();
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                if (visitMode) {
+                    testUserMail = firebase.auth().currentUser.email + "wizyty";
                 } else {
-                    // No user is signed in.
+                    testUserMail = firebase.auth().currentUser.email;
                 }
-            });
+                //  fillPreviousDays();
+            } else {
+                // No user is signed in.
+            }
+        });
+
+        var url_string = window.location.href
+
     </script>
 </body>
 
