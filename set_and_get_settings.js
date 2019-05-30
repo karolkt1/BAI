@@ -15,6 +15,6 @@ wskaznik.set({
 var settingsObject; 
 wskaznik.get().then(function (doc) {
     if (doc.exists) {
-        objectBAI = doc.data();
+        settingsObject = doc.data();
     }
 })
