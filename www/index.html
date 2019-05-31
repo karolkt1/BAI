@@ -5,34 +5,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Blank App</title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
 </head>
 
-<body>
-    <script type="text/javascript" src="cordova.js"></script>
-    <h2 id="readme"></h2>
-    <button class="button" onclick="popup()">Wpisz tekst</button>
-    <button class="button" onclick="speak()">Przeczytaj</button>
-    <button class="button" onclick="speakAPI()">Przeczytaj wykorzystując API</button>
-    <button class="button" onclick="vibration()">Vibration button</button>
-    <button class="button" onclick="gyro()">Gyro button</button>
-    <button class="button" onclick="phoneCall()" >Zadzwoń</button>
-    <div id="accelerometer">Waiting for accelerometer...</div>
-    <br>
-    <br>
-
-    <h3>Firebase</h3>
-    <textarea id="fbText" placeholder="Wpisz dane"></textarea><br>
-    <button class="button" id="submitButton" onclick="submitClick()">Firebase</button>
-
-
-</body>
-
+    <body>
+    <div class="container">
+        <main id="main">
+            <div class="head">
+                   <i class="far fa-user-circle text-center"></i><h1 class="text-center">Formularz<br>
+                logowania</h1>
+                <hr>
+            </div> 
+            <form id="login-form">
+                <div class="input-field">
+                    <input type="email" class="form-control" id="login-email" aria-describedby="emailHelp" placeholder="Login">
+                </div>
+                <div class="input-field">
+                    <input type="password" class="form-control" id="login-password" placeholder="Hasło">
+                </div>
+                <button type="submit" class="btn" id="zaloguj">Zaloguj się</button>
+                <div>
+                    <small class="log form-text float-left"><a href="haslo.html">Zapomniałeś hasła?</a></small>
+                    <small class="log form-text float-right"><a href="rejestracja.html">Zarejestruj się</a></small>
+                </div>
+            </form>		    
+	</main>
+ </div>  
+    </body>
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
 <script src="js/scripts.js"></script>
+<script src="js/login.js"></script>
 <script src='https://code.responsivevoice.org/responsivevoice.js'> </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
 </html>
