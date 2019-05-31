@@ -288,7 +288,7 @@
         function createEntry(param2) {
 
             // After creating account we create user collection
-            db.collection("Dziennik pacjentow Karol").doc(testUserMail).set({})
+            db.collection("Dziennik pacjenta").doc(testUserMail).set({})
 
             if (param2 == 0) {
                 param2 = 23
@@ -297,7 +297,7 @@
             }
 
             if (tableOfEvents[param2]) {
-                db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(tableOfEvents[param2].userDate).doc(parseInt(tableOfEvents[param2].userTime).toString()).set({
+                db.collection("Dziennik pacjenta").doc(testUserMail).collection(tableOfEvents[param2].userDate).doc(parseInt(tableOfEvents[param2].userTime).toString()).set({
                     userMessage: event1.userMessage,
                     // Date: event1.userDate,
                     userTime: event1.userTime
@@ -309,7 +309,7 @@
 
         function getSelectedDate() {
             cleanTable();
-            var docRef = db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(document.getElementById("date1").value);
+            var docRef = db.collection("Dziennik pacjenta").doc(testUserMail).collection(document.getElementById("date1").value);
 
             for (let x = 0; x < 24; x++) {
                 let index = x + 1;
@@ -332,10 +332,10 @@
 
         document.getElementById("date1").addEventListener("change", function () {
             setTimeout(function () {
-                if (isEditModeOn) {
+                // if (isEditModeOn) {
                     console.log("abc");
                     rebuildCalendar();
-                }
+                // }
             }, 700);
         });
 
@@ -345,7 +345,7 @@
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // This is how you get settingsObject. It may be necessary to do the same in other files
-                wskaznik = db.collection("Dziennik pacjentow Karol").doc(firebase.auth().currentUser.email).collection("Ustawienia").doc("dokument");
+                wskaznik = db.collection("Dziennik pacjenta").doc(firebase.auth().currentUser.email).collection("Ustawienia").doc("dokument");
                 wskaznik.get().then(function (doc) {
                     if (doc.exists) {
                         settingsObject = doc.data();
