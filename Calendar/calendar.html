@@ -1,0 +1,287 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Calendar JavaScript</title>
+    <meta name="description" content="Jak żyć?">
+    <meta name="author" content="Karol">
+
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="text-center">
+        <h1>Calendar</h1>
+        <!-- <textarea placeholder="Wpisz dane" id="text1"></textarea><br> -->
+        Podaj datę<br>
+        <input type="date" id="date1" oninput="getSelectedDate()"><br><br>
+        <!-- Podaj godzinę<br> -->
+        <!-- <input type="time" id="time1"><br><br> -->
+        <!-- <button onclick="addDate()" class="btn btn-primary">Add to Calendar</button> -->
+        <!-- <button onclick="addDate()" class="glx-button">Add to Calendar</button><br><br> -->
+        <!-- <button onclick="buildTable()" class="glx-button">Create Table</button> -->
+        <button class="glx-button"><a href="#ex1" rel="modal:open">Dodaj event</a></button><br>
+        <button type="button" onclick="rebuildCallendar()" class="btn btn-primary">Rebuild Calendar</button>
+        <button type="button" onclick="clearLocalStorage()" class="btn btn-warning">Clear localStorage</button>
+        <button type="button" onclick="enableEditMode()" class="btn btn-warning">Edit Mode</button>
+        <br><br>
+    </div>
+    <div style="width: 80%; margin-left: 10%">
+        <table class="table" id="table1">
+            <thead class="thead-dark">
+                <tr id="tableColumns">
+                    <th scope="col">Godzina</th>
+                    <th scope="col">Info</th>
+                </tr>
+            </thead>
+        </table>
+        <br>
+    </div>
+
+    <!-- Here begins the risky part -->
+    <div id="ex1" class="modal text-center" style="height: 50%">
+        Co chcesz zapisać?<br>
+        <textarea placeholder="Wpisz dane" id="text1"></textarea><br>
+        Podaj godzinę<br>
+        <input type="time" id="time1"><br>
+
+        <a href="#" rel="modal:close" onclick="addDate()">Save & close</a>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+    <script>
+        var userText;
+        var userDate;
+        var userTime;
+        var myJSON;
+        var isEditModeOn = false;
+        var needAnotherColumn = true;
+
+
+        class Event {
+            constructor(userMessage, userDate, userTime) {
+                this.userMessage = userMessage;
+                this.userDate = userDate;
+                this.userTime = userTime;
+            }
+        }
+
+        var event1;
+
+        var tableOfEvents = new Array(24);
+
+        var db;
+        var firebaseConfig = {
+            apiKey: "AIzaSyBP8Un_hWobMbOE5HgU41Cwne7L7vMTVhw",
+            authDomain: "bogate-aplikacje-internetowe.firebaseapp.com",
+            databaseURL: "https://bogate-aplikacje-internetowe.firebaseio.com",
+            projectId: "bogate-aplikacje-internetowe",
+            storageBucket: "bogate-aplikacje-internetowe.appspot.com",
+            messagingSenderId: "860894210224",
+            appId: "1:860894210224:web:b950180e478fe509"
+        };
+
+        // Initialize Firebase
+        var app = firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore(app);
+
+
+        function addDate() {
+            userText = document.getElementById("text1").value;
+            userDate = document.getElementById("date1").value;
+            userTime = document.getElementById("time1").value;
+            event1 = new Event(userText, userDate, userTime);
+            myJSON = JSON.stringify(event1);
+            fillCallendar();
+        }
+
+        var tbl = document.getElementById("table1");
+
+        function buildTable() {
+            var tbl = document.getElementById("table1");
+            if (tbl.rows.length > 1) {
+                for (var x = tbl.rows.length - 1; x > 0; x--) {
+                    var row = tbl.deleteRow(x);
+                }
+            }
+            if (isEditModeOn && needAnotherColumn) {
+                th = document.createElement('th');
+                th.innerHTML = "Delete buttons";
+                var tblforedit = document.getElementById("tableColumns")
+                tblforedit.appendChild(th)
+                needAnotherColumn = false
+            }
+
+            var cell = [];
+            var row = [];
+
+            for (var i = 0; i < 24; ++i) {
+                row[i + 1] = tbl.insertRow(-1);
+                cell[i + 1] = row[i + 1].insertCell(-1);
+                cell[i + 2] = row[i + 1].insertCell(0);
+                if (isEditModeOn) {
+                    tbl.rows[i + 1].insertCell(2)
+                }
+                cell[i + 2].innerHTML = i + 1;
+                // cell[i+1].innerHTML = "random text"+i
+                cell[i + 1].innerHTML = "";
+            }
+        }
+        buildTable();
+
+        function fillCallendar() {
+            var userHour = parseInt(userTime);
+            // if (userHour > 12) {
+            //     userHour = userHour - 12;
+            // } else
+            if (userHour == 0) {
+                userHour = 24;
+            }
+            tableOfEvents[userHour - 1] = event1;
+
+            tbl.rows[userHour].cells[1].innerHTML = userText;
+            createEntry(userHour);
+
+            storeObject(tableOfEvents);
+        }
+
+        function storeObject(param1) {
+            // Put the object into storage
+            localStorage.setItem('storedObject', JSON.stringify(param1));
+        }
+
+        function getStoredObject() {
+            // Retrieve the object from storage
+            var retrievedObject = localStorage.getItem('storedObject');
+            return retrievedObject;
+        }
+
+        var parsedJSON;
+        function jsonToEvent(jsonFile) {
+            parsedJSON = JSON.parse(jsonFile);
+            return parsedJSON;
+        }
+
+        // Get tableOfEvents if stored in localStorage
+        var magicFormula
+
+        function rebuildCallendar() {
+            cleanTable();
+            // magicFormula = jsonToEvent(getStoredObject());
+            magicFormula = getSelectedDate();
+            for (let x = 0; x < magicFormula.length; x++) {
+                if (magicFormula[x]) {
+                    // tbl.rows[parseInt(magicFormula[x].userTime)].cells[1].innerHTML = magicFormula[x].userMessage;
+                   // be careful rows+1
+                    tbl.rows[x ].cells[1].innerHTML = magicFormula[x].userMessage;
+                    if (isEditModeOn) {
+                        if (magicFormula[x].userMessage) {
+                            var button = document.createElement("button");
+                            button.innerHTML = "Remove";
+                            // HERE IS BUTTON CLASS CHANGE FOR CSS PURPOSES
+                            button.classList.add('btn-danger');
+                            button.addEventListener("click", function () {
+                                // be careful rows+1
+                                tbl.rows[x ].cells[2].previousElementSibling.innerHTML = "";
+                                console.log(x)
+                                tableOfEvents[x] = null;
+                                storeObject(tableOfEvents);
+                            });
+                            tbl.rows[x ].cells[2].appendChild(button);
+                        }
+                    }
+                }
+            }
+            console.log(magicFormula);
+        }
+        function cleanTable(){
+            for (let x = 1; x <= tableOfEvents.length; x++){
+                tbl.rows[x ].cells[1].innerHTML = "";
+            }
+        }
+
+        function clearLocalStorage() {
+            localStorage.clear();
+        }
+        function enableEditMode() {
+            isEditModeOn = true;
+            buildTable();
+            rebuildCallendar();
+        }
+
+        // Cloud Firestore part
+
+
+        // JAREK TUTAJ JEST PRZYKŁĄDOWY USER MUSISZ DOBRAĆ SIĘ DO REALNEGO Z AUTH !!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!!!
+        // var testUserMail = "jan.kowalski@gmail.com"
+
+        // This function send event from tableOfEvents to collection named after date.
+        function createEntry(param2) {
+
+            // After creating account we create user collection
+            db.collection("Dziennik pacjentow Karol").doc(testUserMail).set({})
+
+            if (param2 == 0) {
+                param2 = 23
+            } else {
+                param2 = param2 - 1;
+            }
+
+            if (tableOfEvents[param2]) {
+                db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(tableOfEvents[param2].userDate).doc(parseInt(tableOfEvents[param2].userTime).toString()).set({
+                    userMessage: event1.userMessage,
+                    // Date: event1.userDate,
+                    userTime: event1.userTime
+                })
+            }
+            console.log("data sent to firestore")
+        }
+        var jsObjArray = new Array(24);
+
+        function getSelectedDate() {
+            cleanTable();
+            var docRef = db.collection("Dziennik pacjentow Karol").doc(testUserMail).collection(document.getElementById("date1").value);
+
+            for (let x = 0; x < 24; x++) {
+                let index = x + 1;
+                index = x.toString();
+                
+                docRef.doc(index).get().then(function (doc) {
+                    if (doc.exists){
+                        if (x== 0){
+                            jsObjArray[23] = doc.data();
+                        } else{
+                    jsObjArray[x] = doc.data();
+                        }
+                    }
+                })
+            }
+            return jsObjArray;
+        }
+        var testUserMail;
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                     testUserMail = firebase.auth().currentUser.email;
+                    //  fillPreviousDays();
+                } else {
+                    // No user is signed in.
+                }
+            });
+    </script>
+</body>
+
+</html>

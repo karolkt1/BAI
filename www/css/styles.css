@@ -64,9 +64,11 @@ button a{
     color: white; 
 }
 
+
 button#submitButton{
     padding: 5px 35px;
 }
+
 
 small.log a{
     color: red;
@@ -161,6 +163,7 @@ div.input-icon i{
 div.rejestracja small{
     color: red;
 }
+
 
 div#password-reset{
     margin-top: 45px;
@@ -267,6 +270,7 @@ table.cisnienie tr.last td:nth-child(even){
 
 table.cisnienie #tableColumns{
     display: none;
+
 }
 
 /* Powiadomienia */
