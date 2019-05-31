@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -24,37 +25,39 @@
 <body>
     <main class="calendar">
         <div class="container">
-    <div class="text-center">
-        <i class=" label float-right"></i>
-		<h1 class="top-head "></h1>
-        <hr class="page">
-        <h5 class="h5">Tu możesz przegłądać swój kalendarz wydarzeń. <br>
-        Dla zmian <a href="strona-glowna.html">wróc do głównego menu</a> i wejdźć do strony edycji kalendarza.</h5>
-        <div class="podaj-data"><h3>Podaj datę</h3>
-        <input type="date" id="date1" oninput="getSelectedDate()"><br><br>
-        <button class="glx-button guzik"><a href="#ex1" rel="modal:open">Dodaj wydarzenie</a></button>
-        </div>    
-<!--        <button type="button" onclick="rebuildCallendar()" class="btn btn-primary">Rebuild Calendar</button>
+            <div class="text-center">
+                <i class=" label float-right"></i>
+                <h1 class="top-head "></h1>
+                <hr class="page">
+                <h5 class="h5">Tu możesz przegłądać swój kalendarz wydarzeń. <br>
+                    Dla zmian <a href="strona-glowna.html">wróc do głównego menu</a> i wejdźć do strony edycji
+                    kalendarza.</h5>
+                <div class="podaj-data">
+                    <h3>Podaj datę</h3>
+                    <input type="date" id="date1" oninput="getSelectedDate()"><br><br>
+                    <button class="glx-button guzik"><a href="#ex1" rel="modal:open">Dodaj wydarzenie</a></button>
+                </div>
+                <!--        <button type="button" onclick="rebuildCalendar()" class="btn btn-primary">Rebuild Calendar</button>
         <button type="button" onclick="clearLocalStorage()" class="btn btn-warning">Clear localStorage</button>
         <button type="button" onclick="enableEditMode()" class="btn btn-warning">Edit Mode</button>
         <br><br> -->
-    </div>
-    <div class="table" >
-        <table class="table" id="table1">
-            <thead class="">
-                <tr id="tableColumns">
-                    <th class="czas" scope="col">Godzina</th>
-                    <th class="info" scope="col">Informacja</th>
-                </tr>
-            </thead>
-        </table>
-        <br>
-    </div>
-        
-        
+            </div>
+            <div class="table">
+                <table class="table" id="table1">
+                    <thead class="">
+                        <tr id="tableColumns">
+                            <th class="czas" scope="col">Godzina</th>
+                            <th class="info" scope="col">Informacja</th>
+                        </tr>
+                    </thead>
+                </table>
+                <br>
+            </div>
 
-    <!-- Here begins the risky part -->
- <!--  <div id="ex1" class="window modal text-center" style="height: 50%">
+
+
+            <!-- Here begins the risky part -->
+            <!--  <div id="ex1" class="window modal text-center" style="height: 50%">
         Co chcesz zapisać?<br>
         <textarea placeholder="Wpisz dane" id="text1"></textarea><br>
         Podaj godzinę<br>
@@ -62,29 +65,29 @@
 
         <a href="#" rel="modal:close" onclick="addDate()">Save & close</a>
     </div> 
- -->   
- <div id="myModalBox" class="modal-fade">
-  <div class="modal-dialog">
-    <div id="ex1" class="window modal text-center">
-      <div class="modal-header">
-        <h4 class="modal-title">Dodaj wydarzenie do kalendarza</h4>
-      </div>
-      
-      <div class="modal-body">
-        <p>Nazwa wydarzenia</p>
-        <textarea placeholder="Wpisz nazwę" id="text1"></textarea>
-        <p>Podaj godzinę</p>
-        <input type="time" id="time1">
-      </div>
-      
-      <div class="modal-footer">
-        <a href="#" rel="modal:close" onclick="addDate()">Save & close</a>
-      </div>
-    </div>
-  </div>
-</div>
+ -->
+            <div id="myModalBox" class="modal-fade">
+                <div class="modal-dialog">
+                    <div id="ex1" class="window modal text-center">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Dodaj wydarzenie do kalendarza</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>Nazwa wydarzenia</p>
+                            <textarea placeholder="Wpisz nazwę" id="text1"></textarea>
+                            <p>Podaj godzinę</p>
+                            <input type="time" id="time1">
+                        </div>
+
+                        <div class="modal-footer">
+                            <a href="#" rel="modal:close" onclick="addDate()">Save & close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        </main>
+    </main>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
@@ -102,31 +105,31 @@
             var url = new URL(url_string);
             var mode = url.searchParams.get("mode");
             var edit = url.searchParams.get("edit");
-            if ( mode == "wizyty"){
+            if (mode == "wizyty") {
                 visitMode = true;
             }
-            if (edit == "true"){
-                isEditModeOn= true;
+            if (edit == "true") {
+                isEditModeOn = true;
             }
             var zmiennaTytul = document.querySelector("h1");
             var podaj_data = document.querySelector(".podaj-data");
-            if( mode == "leki"){
+            if (mode == "leki") {
                 zmiennaTytul.innerHTML = "Przegląd Leków"
                 $("i").addClass("fas fa-pills");
             }
-            if( mode == "wizyty"){
+            if (mode == "wizyty") {
                 zmiennaTytul.innerHTML = "Przegląd Wizyt";
                 $("i").addClass("fas fa-user-md");
             }
-            if( edit == "true"){
+            if (edit == "true") {
                 $(".h5").addClass("hide");
                 $("i").addClass("fas fa-cog");
             }
         }
-        
+
         getParamsFromUrl();
-        
-        
+
+
 
         class Event {
             constructor(userMessage, userDate, userTime) {
@@ -135,8 +138,8 @@
                 this.userTime = userTime;
             }
         }
-        
-        
+
+
 
         var event1;
 
@@ -237,7 +240,7 @@
         // Get tableOfEvents if stored in localStorage
         var magicFormula
 
-        function rebuildCallendar() {
+        function rebuildCalendar() {
             cleanTable();
             // magicFormula = jsonToEvent(getStoredObject());
             magicFormula = getSelectedDate();
@@ -278,16 +281,8 @@
         function enableEditMode() {
             isEditModeOn = true;
             buildTable();
-            rebuildCallendar();
+            rebuildCalendar();
         }
-
-        // Cloud Firestore part
-
-
-        // JAREK TUTAJ JEST PRZYKŁĄDOWY USER MUSISZ DOBRAĆ SIĘ DO REALNEGO Z AUTH !!!!!!!!!
-        // !!!!!!!!!!!!!!!!!!!!!!
-        // !!!!!!!!!!!!!!!!!!!!!!!!
-        // var testUserMail = "jan.kowalski@gmail.com"
 
         // This function send event from tableOfEvents to collection named after date.
         function createEntry(param2) {
@@ -329,24 +324,45 @@
                         }
                     }
                 })
+
             }
+
             return jsObjArray;
         }
+
+        document.getElementById("date1").addEventListener("change", function () {
+            setTimeout(function () {
+                if (isEditModeOn) {
+                    console.log("abc");
+                    rebuildCalendar();
+                }
+            }, 700);
+        });
+
         var testUserMail;
+        var wskaznik;
+        var settingsObject;
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
+                // This is how you get settingsObject. It may be necessary to do the same in other files
+                wskaznik = db.collection("Dziennik pacjentow Karol").doc(firebase.auth().currentUser.email).collection("Ustawienia").doc("dokument");
+                wskaznik.get().then(function (doc) {
+                    if (doc.exists) {
+                        settingsObject = doc.data();
+                    }
+                })
+
                 if (visitMode) {
                     testUserMail = firebase.auth().currentUser.email + "wizyty";
                 } else {
                     testUserMail = firebase.auth().currentUser.email;
                 }
-                //  fillPreviousDays();
+
             } else {
                 // No user is signed in.
             }
         });
 
-        var url_string = window.location.href
 
     </script>
 </body>
