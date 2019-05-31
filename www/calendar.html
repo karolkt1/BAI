@@ -288,8 +288,8 @@
         function createEntry(param2) {
 
             // After creating account we create user collection
-            db.collection("Dziennik pacjenta").doc(testUserMail).set({})
 
+            db.collection("Dziennik pacjenta").doc(testUserMail).set({})
             if (param2 == 0) {
                 param2 = 23
             } else {
@@ -297,6 +297,7 @@
             }
 
             if (tableOfEvents[param2]) {
+
                 db.collection("Dziennik pacjenta").doc(testUserMail).collection(tableOfEvents[param2].userDate).doc(parseInt(tableOfEvents[param2].userTime).toString()).set({
                     userMessage: event1.userMessage,
                     // Date: event1.userDate,
@@ -332,8 +333,9 @@
 
         document.getElementById("date1").addEventListener("change", function () {
             setTimeout(function () {
+
                 // if (isEditModeOn) {
-                    console.log("abc");
+//                     console.log("abc");
                     rebuildCalendar();
                 // }
             }, 700);
@@ -345,7 +347,9 @@
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // This is how you get settingsObject. It may be necessary to do the same in other files
+
                 wskaznik = db.collection("Dziennik pacjenta").doc(firebase.auth().currentUser.email).collection("Ustawienia").doc("dokument");
+
                 wskaznik.get().then(function (doc) {
                     if (doc.exists) {
                         settingsObject = doc.data();
