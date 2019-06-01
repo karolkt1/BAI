@@ -130,11 +130,11 @@
             } 
             if (settingsObject.powiadomienia){
              document.getElementsByClassName("toggle btn btn-light android")[1].classList.remove("off");
-             document.querySelector("#alarmPrzyBezruchu").checked = settingsObject.powiadomienia;
+             document.querySelector("#powiadomienia").checked = settingsObject.powiadomienia;
             }
             if (settingsObject.czytaniePowiadomien){
              document.getElementsByClassName("toggle btn btn-light android")[2].classList.remove("off");
-             document.querySelector("#alarmPrzyBezruchu").checked = settingsObject.czytaniePowiadomien;
+             document.querySelector("#czytaniePowiadomien").checked = settingsObject.czytaniePowiadomien;
             } 
             document.querySelector("#numerAlarmowy").value = settingsObject.numerAlarmowy;
 
