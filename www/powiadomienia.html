@@ -113,11 +113,20 @@
             //     }
             // })
         }
+        
         var alarm = document.querySelector("#alarmPrzyBezruchu");
+        var powiadomienia = document.querySelector("#powiadomienia");
+        var czytanie = document.querySelector("#czytaniePowiadomien");
         
         $("#alarmPrzyBezruchu").change(function() {
             console.log("Alarm: " + alarm.checked);
         });
+        $("#powiadomienia").change(function() {
+            console.log("Powiadomienia: " + powiadomienia.checked);
+        });$("#czytaniePowiadomien").change(function() {
+            console.log("Czytanie: " + czytanie.checked);
+        });
+        
         
     </script>
 </body>
