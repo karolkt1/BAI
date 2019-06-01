@@ -36,17 +36,17 @@
 
                <div class="check bez-ruchu"> 
                 <label class="checkbox-inline">
-                    <input type="checkbox" checked data-toggle="toggle" data-style="android" data-onstyle="info" id="alarmPrzyBezruchu"><span>Alarm przy bezruchu</span>
+                    <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info" id="alarmPrzyBezruchu"><span>Alarm przy bezruchu</span>
                 </label>
                 </div>
                 <div class=" check powiad">
                 <label class="checkbox-inline">
-                    <input type="checkbox" checked data-toggle="toggle" data-style="android" data-onstyle="info" id="powiadomienia"><span>Powiadomienia</span>
+                    <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info" id="powiadomienia"><span>Powiadomienia</span>
                 </label>
                 </div>
                 <div class="check czytanie">
                 <label class="checkbox-inline">
-                    <input type="checkbox" checked data-toggle="toggle" data-style="android" data-onstyle="info" id="czytaniePowiadomien"><span>Czytanie powiadomień</span>
+                    <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info" id="czytaniePowiadomien"><span>Czytanie powiadomień</span>
                 </label>
 
                 </div>
@@ -113,6 +113,12 @@
             //     }
             // })
         }
+        var alarm = document.querySelector("#alarmPrzyBezruchu");
+        
+        $("#alarmPrzyBezruchu").change(function() {
+            console.log("Alarm: " + alarm.checked);
+        });
+        
     </script>
 </body>
 
