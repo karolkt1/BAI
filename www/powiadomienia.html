@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Blank App</title>
-	<script src="js/scripts.js"></script>
+    <script src="js/scripts.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
@@ -25,6 +25,7 @@
 </head>
 
 <body>
+    <script type="text/javascript" src="cordova.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
@@ -37,7 +38,7 @@
 
                 <div class="check bez-ruchu">
                     <label class="checkbox-inline">
-                        <input type="checkbox" data-toggle="toggle"  data-style="android" data-onstyle="info"
+                        <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info"
                             id="alarmPrzyBezruchu"><span>Alarm przy bezruchu</span>
                     </label>
                 </div>
@@ -95,15 +96,15 @@
                 // No user is signed in.
             }
         });
-       
+
 
         function saveChanges() {
 
-        var alarmPrzyBezruchu = document.querySelector("#alarmPrzyBezruchu").checked;
-        var powiadomienia = document.querySelector("#powiadomienia").checked;
-        var czytaniePowiadomien = document.querySelector("#czytaniePowiadomien").checked;
-        var numerAlarmowy = document.querySelector("#numerAlarmowy").value;
-        var wskaznik = db.collection("Dziennik pacjenta").doc(testUserMail).collection("Ustawienia").doc("dokument");
+            var alarmPrzyBezruchu = document.querySelector("#alarmPrzyBezruchu").checked;
+            var powiadomienia = document.querySelector("#powiadomienia").checked;
+            var czytaniePowiadomien = document.querySelector("#czytaniePowiadomien").checked;
+            var numerAlarmowy = document.querySelector("#numerAlarmowy").value;
+            var wskaznik = db.collection("Dziennik pacjenta").doc(testUserMail).collection("Ustawienia").doc("dokument");
             wskaznik.set({
                 alarmPrzyBezruchu: alarmPrzyBezruchu,
                 powiadomienia: powiadomienia,
@@ -119,33 +120,68 @@
                 if (doc.exists) {
                     settingsObject = doc.data();
                     setCheckboxes()
+                    if (settingsObject.alarmPrzyBezruchu) {
+                        gyro();
+                    }
                 }
             })
         }
 
         function setCheckboxes() {
-            if (settingsObject.alarmPrzyBezruchu){
-             document.getElementsByClassName("toggle btn btn-light android")[0].classList.remove("off");
-             document.querySelector("#alarmPrzyBezruchu").checked = settingsObject.alarmPrzyBezruchu;
-            } 
-            if (settingsObject.powiadomienia){
-             document.getElementsByClassName("toggle btn btn-light android")[1].classList.remove("off");
-             document.querySelector("#powiadomienia").checked = settingsObject.powiadomienia;
+            if (settingsObject.alarmPrzyBezruchu) {
+                document.getElementsByClassName("toggle btn btn-light android")[0].classList.remove("off");
+                document.querySelector("#alarmPrzyBezruchu").checked = settingsObject.alarmPrzyBezruchu;
             }
-            if (settingsObject.czytaniePowiadomien){
-             document.getElementsByClassName("toggle btn btn-light android")[2].classList.remove("off");
-             document.querySelector("#czytaniePowiadomien").checked = settingsObject.czytaniePowiadomien;
-            } 
+            if (settingsObject.powiadomienia) {
+                document.getElementsByClassName("toggle btn btn-light android")[1].classList.remove("off");
+                document.querySelector("#powiadomienia").checked = settingsObject.powiadomienia;
+            }
+            if (settingsObject.czytaniePowiadomien) {
+                document.getElementsByClassName("toggle btn btn-light android")[2].classList.remove("off");
+                document.querySelector("#czytaniePowiadomien").checked = settingsObject.czytaniePowiadomien;
+            }
             document.querySelector("#numerAlarmowy").value = settingsObject.numerAlarmowy;
 
         }
 
-		function setGyroScope() {
-            if (settingsObject.alarmPrzyBezruchu){
-                alert("gyro działa");
-                gyro();
+        function gyro() {
+            // Update acceleration every 3 seconds
+            var options = { frequency: 5000 };
+            watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+        }
+
+        function stopWatch() {
+            if (watchID) {
+                navigator.accelerometer.clearWatch(watchID);
+                watchID = null;
             }
-		}
+        }
+
+        var firstRun = true;
+        var arrayOfMeasurement;
+        var arrayOfMeasurementLater;
+
+        function onSuccess(acceleration) {
+            if (firstRun) {
+                arrayOfMeasurement = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
+                firstRun = false;
+            } else {
+                arrayOfMeasurementLater = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
+                firstRun = true;
+            }
+        }
+
+        function compareMeasurements() {
+            if (arrayOfMeasurement[0] == arrayOfMeasurementLater[0] && arrayOfMeasurement[1] == arrayOfMeasurementLater[1] && arrayOfMeasurement[2] == arrayOfMeasurementLater[2]) {
+                console.log("everything is fine");
+            } else {
+                window.open("tel:" + settingsObject.numerAlarmowy);
+            }
+        }
+
+        function onError() {
+            alert('onError!');
+        }
     </script>
 </body>
 
