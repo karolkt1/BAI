@@ -29,9 +29,8 @@
                 <i class=" label float-right"></i>
                 <h1 class="top-head "></h1>
                 <hr class="page">
-                <h5 class="h5">Tu możesz przegłądać swój kalendarz wydarzeń. <br>
-                    Dla zmian <a href="strona-glowna.html">wróc do głównego menu</a> i wejdź do strony edycji
-                    kalendarza.</h5>
+                    <button><a class="h5" href="strona-glowna.html">Powrót</a> </button>
+                    </h5>
                 <div class="podaj-data">
                     <h3>Podaj datę</h3>
                     <input type="date" id="date1" oninput="getSelectedDate()"><br><br>
@@ -107,9 +106,11 @@
                 zmiennaTytul.innerHTML = "Przegląd Wizyt";
                 $("i").addClass("fas fa-user-md");
             }
-            if (edit == "true") {
-                $(".h5").addClass("hide");
-                $("i").addClass("fas fa-cog");
+            if (edit == "true" && mode == "leki") {
+                zmiennaTytul.innerHTML = "Edycja Leków"
+            }
+            if (edit == "true" && mode == "wizyty" ){
+                zmiennaTytul.innerHTML = "Edycja Wizyt"
             }
         }
 
