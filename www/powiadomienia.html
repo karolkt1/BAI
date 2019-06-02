@@ -29,6 +29,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+    <script src='https://code.responsivevoice.org/responsivevoice.js'> </script>
     <main id="main">
         <div class="container">
             <i class="fas fa-bell label float-right"></i>
@@ -156,19 +157,28 @@
                 arrayOfMeasurementLater = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
                 firstRun = true;
             }
-        compareMeasurements();
+            compareMeasurements();
         }
         function compareMeasurements() {
             if (arrayOfMeasurement[0] == arrayOfMeasurementLater[0] && arrayOfMeasurement[1] == arrayOfMeasurementLater[1] && arrayOfMeasurement[2] == arrayOfMeasurementLater[2]) {
                 window.open("tel:" + settingsObject.numerAlarmowy);
                 vibration();
+                speakAPI();
+
             } else {
                 console.log("everything is fine");
             }
         }
         function onError() {
             alert('onError!');
-        } 
+        }
+        function vibration() {
+            navigator.vibrate(1000);
+        }
+        function speakAPI() {
+            textToRead = "Zadzwoń po pomoc"
+                responsiveVoice.speak(textToRead, "Polish Female");
+        }
     </script>
 </body>
 
