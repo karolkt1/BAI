@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title> Sample </title>
+</head>
+
+<body>
+  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+
+
+  <button onclick="logInGoogle()">Google SignIn</button>
+  <button onclick="logout()">Logout</button>
+
+
+  <script>
+    // Your web app's Firebase configuration
+
+    var firebaseConfig = {
+      apiKey: "AIzaSyBP8Un_hWobMbOE5HgU41Cwne7L7vMTVhw",
+      authDomain: "bogate-aplikacje-internetowe.firebaseapp.com",
+      databaseURL: "https://bogate-aplikacje-internetowe.firebaseio.com",
+      projectId: "bogate-aplikacje-internetowe",
+      storageBucket: "bogate-aplikacje-internetowe.appspot.com",
+      messagingSenderId: "860894210224",
+      appId: "1:860894210224:web:b950180e478fe509"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    function logInGoogle() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      provider.setCustomParameters({
+        prompt: 'select_account',
+
+      });
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+        // This gives you a Google Access Token.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+      });
+
+    }
+    function logout() {
+      firebase.auth().signOut().then(function () {
+        //  console.log("Sign-out successful.")
+      }).catch(function (error) {
+        // An error happened.
+      });
+    }
+
+
+  </script>
+
+</body>
+
+</html>

@@ -1,6 +1,4 @@
 var textToRead;
-
-
 function popup() {
   textToRead = prompt("Co mam przeczytać", "");
 
@@ -18,21 +16,18 @@ function speakAPI() {
   responsiveVoice.speak(textToRead, "Polish Female");
 };
 
-
 function vibration() {
   window.navigator.vibrate(500)
 }
 
 var watchID = null;
-
-
 function gyro() {
   startWatch();
 }
-function startWatch() {
 
+function startWatch() {
   // Update acceleration every 3 seconds
-  var options = { frequency: 3000 };
+  var options = { frequency: 10000 };
 
   watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
 }
@@ -44,26 +39,40 @@ function stopWatch() {
   }
 }
 
+var firstRun = true;
+var arrayOfMeasurement;
+var arrayOfMeasurementLater;
 function onSuccess(acceleration) {
   var element = document.getElementById('accelerometer');
   element.innerHTML = 'Acceleration X: ' + acceleration.x + '<br />' +
     'Acceleration Y: ' + acceleration.y + '<br />' +
     'Acceleration Z: ' + acceleration.z + '<br />' +
     'Timestamp: ' + acceleration.timestamp + '<br />';
+
+  if (firstRun) {
+    arrayOfMeasurement = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
+    firstRun = false;
+  } else {
+    arrayOfMeasurementLater = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
+    firstRun = true;
+  } 
+  compareMeasurements();
 }
 
+function compareMeasurements() {
+  if (arrayOfMeasurement[0] == arrayOfMeasurementLater[0] && arrayOfMeasurement[1] == arrayOfMeasurementLater[1] && arrayOfMeasurement[2] == arrayOfMeasurementLater[2]) {
+    alert('if');
+    window.open("tel:" + "555");
+  } else {
+    alert('else');
+  }
+}
 
 function onError() {
   alert('onError!');
 }
 
 function setupPopout() {
-  cordova.plugins.notification.local.schedule({
-    title: "Tutej nazwa apki",
-    message: "Testowy pop-out",
-    foreground: true,
-    trigger: { in: 15, unit: 'second' }
-  });
 }
 
 function phoneCall() {
@@ -106,4 +115,3 @@ function submitClick() {
     phoneNumber: "500500500"
   })
 }
-

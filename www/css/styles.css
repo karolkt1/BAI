@@ -1,12 +1,300 @@
-.button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+/* Login page */
+body{
+    background-color: ;
+}
+main{
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+}
+
+div.head i{
+    margin: 10px;
+    position: relative;
+    top: 6rem;
+    right: 8.5rem;
+    color: #00B2EE;
+}
+div.head{
+    margin-bottom: 25px;
+    width:99%;
+    font-size: 4rem;
+    position: relative;
+    left: 2rem;
+    color: #3D3842;
+    text-align: center;
+}
+
+h1{
+    padding-left: 20px;
+}
+main hr{
+    width: 35%;
+    border-bottom: 2px solid #00B2EE;
+    
+}
+
+main hr.page{
+    position: relative;
+    right: 30px;
+}
+
+button a:hover, 
+button a:checked{
+    color: black;
+    text-decoration: none;
+     
+}
+
+button:hover{
+    background-color: #62c1e8;
+}
+
+button{
+    background-color: #00B2EE;
+    border-radius: 25px !important;
+    margin: 25px 15px;
+    color: white;
+    border:none;
+}
+
+button a{
+    padding: 10px 45px;
+    font-weight: 500;
+    color: white; 
+}
+
+
+button#submitButton{
+    padding: 5px 35px;
+}
+
+
+small.log a{
+    color: red;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Strona glowna */
+
+
+div.all-cell{
+    margin-bottom: 25px;
+}
+div.col-6{
+    max-width: 45%; !important
+}
+
+div.cell{
+    border-bottom: 1px solid #EEEEE0;
+    margin: 15px 5px;
+    padding: 10px;
+}
+div.cell a{
+    color: black;
+    font-size: 1rem;
+    font-weight: 500;
+    
+}
+div.cell a i{
+    margin: 10px;
+    color: #00B2EE;
+    font-size: 4em;
+}
+
+div.cell:hover a{
+    color: #1874CD;
+    text-decoration: none;
+}
+
+div.cell:hover a i{
+    color: #87CEEB;
+}
+
+/* Odzyskiwanie konta */
+
+i.label{
+    font-size: 3.5em;
+    color: #00B2EE; 
+    margin-left: 7px;
+}
+
+h1.top-head{
+    font-size: 2rem;
+    padding: 0;
+}
+
+button.wroc{
+    margin: 20px 0;
+    padding: 3px;
+}
+
+button.wroc a{
+    padding: 0 10px;
+    font-weight: 400;
+}
+
+div.form{
+    margin: 80px 0 60px;
+}
+h3{
+    font-size:1rem;
+    font-weight: 400;
+    margin: 20px ;
+}
+
+/* Rejestracja */
+
+div.input-icon{
+    display: flex;   
+}
+
+div.input-icon input{
+    width: 100%;
+    margin: 5px 20px 10px 0;
+}
+
+div.input-icon i{
+    margin: 15px 0;
+    color: #00B2EE; 
+}
+
+div.rejestracja small{
+    color: red;
+}
+
+
+div#password-reset{
+    margin-top: 45px;
+}
+
+div#password-reset h2{
+    font-size: 1.5rem;
+}
+
+
+/* Calendar */
+
+div.modal{
+    
+    font-weight: 500; 
+    height: unset;
+}
+
+div.modal h4{
+    margin: 0 auto;
+    color: #00B2EE;
+}
+
+div.modal a.close-modal{
+    top: 1.5px;
+    right: 1.5px;
+}
+
+div.modal .modal-footer a{
+    padding: 6px 45px;
+    border-radius: 20px;
+    color: white;
+    background-color: #00B2EE;
+    margin: 0 auto;
+}
+.guzik{
+    margin:10px 0 30px;
+    padding: 5px;
+}
+main.calendar h3{
+    font-size: 1rem;
+    margin-top: 55px;
+}
+
+main.calendar h5{
+    font-weight: 400;
+    margin-top: 55px;
+}
+
+main.calendar table{
+    margin: 3% 0;
+}
+
+main.calendar table th{
+    border-color: #00B2EE;
+    
+}
+
+main.calendar table th.czas{
+    width: 30%;
+}
+
+main.calendar table td:nth-child(even){
+    color: #00B2EE;
+}
+
+main.calendar .hide{
+    display: none;
+}
+
+main.calendar button.usun{
+    background-color: #d9534f;
+    padding: 5px 45px;
+    font-weight: 500;
+}
+main.calendar button.usun:hover{
+    background-color: #ef7e7a;
+}    
+main.calendar button.usun:focus{
+    outline: 1px dotted;
+}
+
+/* Cisnienie */
+ 
+table.cisnienie{
+    margin-top: 50px;
+}
+
+table.cisnienie tr td{
+    width:50%;
+    padding: 20px;
+    font-size: 1.04rem;
+    
+}
+
+table.cisnienie tr td:nth-child(odd){
+    text-align: left !important;
+    color: #00B2EE;
+}
+table.cisnienie tr.last td:nth-child(even){
+    background-color: rgba(0, 178, 238, 0.1);
+    font-weight: 500;
+}
+
+table.cisnienie #tableColumns{
+    display: none;
+
+}
+
+/* Powiadomienia */
+
+div.toggle-group .btn-info{
+    background-color: #00B2EE;
+    border-color: #00B2EE;
+}
+
+div.check{
+    text-align:left;
+    margin:20px;
+    font-size: 1.2rem;
+}
+div.check span{
+    padding-left: 10px;
+}
+
+.input-group .input-group-prepend .input-group-text{
+    background-color: rgba(0,178,238, 0.94);
+    color: white;
+}
+
+button.zapisz{
+    padding: 5px 30px;
+    margin: 30px;
 }
