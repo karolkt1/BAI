@@ -14,7 +14,22 @@ loginForm.addEventListener('submit', (e) => {
   });
 
 });
+function logInGoogle() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('profile');
+  provider.addScope('email');
+  provider.setCustomParameters({
+    prompt: 'select_account',
 
+  });
+  firebase.auth().signInWithRedirect(provider).then(function (result) {
+    // This gives you a Google Access Token.
+    var token = result.credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+  });
+
+}
 
 
 auth.onAuthStateChanged(user => {
