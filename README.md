@@ -1,14 +1,9 @@
-# A Blank PhoneGap App
+Aplikacja wspomająca osoby starsze
 
-## Usage
+## Link do Trello
 
-### PhoneGap CLI
+https://trello.com/b/976SvbUE/bai-projekt
 
-    $ phonegap create my-app --template blank
+## Link do prototypu
 
-### Desktop
-
-In your browser, open the file:
-
-    /www/index.html
-
+https://www.figma.com/file/ZjWjPMntvGNPD83cOc4rMOZn/BAI?node-id=0%3A1
