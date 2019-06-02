@@ -79,11 +79,9 @@
             messagingSenderId: "860894210224",
             appId: "1:860894210224:web:b950180e478fe509"
         };
-
         // Initialize Firebase
         var app = firebase.initializeApp(firebaseConfig);
         db = firebase.firestore(app);
-
         var testUserMail;
         var wskaznik;
         firebase.auth().onAuthStateChanged(function (user) {
@@ -96,10 +94,7 @@
                 // No user is signed in.
             }
         });
-
-
         function saveChanges() {
-
             var alarmPrzyBezruchu = document.querySelector("#alarmPrzyBezruchu").checked;
             var powiadomienia = document.querySelector("#powiadomienia").checked;
             var czytaniePowiadomien = document.querySelector("#czytaniePowiadomien").checked;
@@ -111,22 +106,19 @@
                 czytaniePowiadomien: czytaniePowiadomien,
                 numerAlarmowy: numerAlarmowy
             })
-
         }
-
         var settingsObject;
         function getval() {
             wskaznik.get().then(function (doc) {
                 if (doc.exists) {
                     settingsObject = doc.data();
-                    setCheckboxes()
                     if (settingsObject.alarmPrzyBezruchu) {
                         gyro();
                     }
+                    setCheckboxes()
                 }
             })
         }
-
         function setCheckboxes() {
             if (settingsObject.alarmPrzyBezruchu) {
                 document.getElementsByClassName("toggle btn btn-light android")[0].classList.remove("off");
@@ -141,26 +133,21 @@
                 document.querySelector("#czytaniePowiadomien").checked = settingsObject.czytaniePowiadomien;
             }
             document.querySelector("#numerAlarmowy").value = settingsObject.numerAlarmowy;
-
         }
-
         function gyro() {
             // Update acceleration every 3 seconds
-            var options = { frequency: 5000 };
+            var options = { frequency: 10000 };
             watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
         }
-
         function stopWatch() {
             if (watchID) {
                 navigator.accelerometer.clearWatch(watchID);
                 watchID = null;
             }
         }
-
         var firstRun = true;
         var arrayOfMeasurement;
         var arrayOfMeasurementLater;
-
         function onSuccess(acceleration) {
             if (firstRun) {
                 arrayOfMeasurement = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
@@ -169,19 +156,19 @@
                 arrayOfMeasurementLater = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
                 firstRun = true;
             }
+        compareMeasurements();
         }
-
         function compareMeasurements() {
             if (arrayOfMeasurement[0] == arrayOfMeasurementLater[0] && arrayOfMeasurement[1] == arrayOfMeasurementLater[1] && arrayOfMeasurement[2] == arrayOfMeasurementLater[2]) {
-                console.log("everything is fine");
-            } else {
                 window.open("tel:" + settingsObject.numerAlarmowy);
+                vibration();
+            } else {
+                console.log("everything is fine");
             }
         }
-
         function onError() {
             alert('onError!');
-        }
+        } 
     </script>
 </body>
 
