@@ -101,6 +101,7 @@ db = firebase.firestore(app);
 var textVar = document.getElementById("fbText");
 var submitButton = document.getElementById("submitButton");
 
+const auth = firebase.auth();
 
 // Legacy code for realtime database 
 // function submitClick2() {
