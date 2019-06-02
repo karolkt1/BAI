@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Blank App</title>
+    <!-- <script src="js/scripts.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+
+
+</head>
+
+<body>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+    <script src='https://code.responsivevoice.org/responsivevoice.js'> </script>
+    <main id="main">
+        <div class="container">
+            <i class="fas fa-bell label float-right"></i>
+            <h1 class="top-head ">Ustawienia powiadomień</h1>
+            <hr class="page">
+            <div class="form">
+
+                <div class="check bez-ruchu">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info"
+                            id="alarmPrzyBezruchu"><span>Alarm przy bezruchu</span>
+                    </label>
+                </div>
+                <div class=" check powiad">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info"
+                            id="powiadomienia"><span>Powiadomienia</span>
+                    </label>
+                </div>
+                <div class="check czytanie">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info"
+                            id="czytaniePowiadomien"><span>Czytanie powiadomień</span>
+                    </label>
+
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Numer alarmowy</span>
+                    </div>
+                    <input type="text" placeholder="Wprowadź numer" id="numerAlarmowy">
+                </div>
+
+                <button class="zapisz" onclick="saveChanges()"><a href="#">Zapisz</a></button>
+            </div>
+        </div>
+        <button type="submit" class=" wroc float-left"><a href="strona-glowna.html">Wróć</a></button>
+
+    </main>
+    <script>
+        var db;
+        var firebaseConfig = {
+            apiKey: "AIzaSyBP8Un_hWobMbOE5HgU41Cwne7L7vMTVhw",
+            authDomain: "bogate-aplikacje-internetowe.firebaseapp.com",
+            databaseURL: "https://bogate-aplikacje-internetowe.firebaseio.com",
+            projectId: "bogate-aplikacje-internetowe",
+            storageBucket: "bogate-aplikacje-internetowe.appspot.com",
+            messagingSenderId: "860894210224",
+            appId: "1:860894210224:web:b950180e478fe509"
+        };
+        // Initialize Firebase
+        var app = firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore(app);
+        var testUserMail;
+        var wskaznik;
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                testUserMail = firebase.auth().currentUser.email;
+                wskaznik = db.collection("Dziennik pacjenta").doc(testUserMail).collection("Ustawienia").doc("dokument");
+                getval();
+            }
+            else {
+                // No user is signed in.
+            }
+        });
+        function saveChanges() {
+            var alarmPrzyBezruchu = document.querySelector("#alarmPrzyBezruchu").checked;
+            var powiadomienia = document.querySelector("#powiadomienia").checked;
+            var czytaniePowiadomien = document.querySelector("#czytaniePowiadomien").checked;
+            var numerAlarmowy = document.querySelector("#numerAlarmowy").value;
+            var wskaznik = db.collection("Dziennik pacjenta").doc(testUserMail).collection("Ustawienia").doc("dokument");
+            wskaznik.set({
+                alarmPrzyBezruchu: alarmPrzyBezruchu,
+                powiadomienia: powiadomienia,
+                czytaniePowiadomien: czytaniePowiadomien,
+                numerAlarmowy: numerAlarmowy
+            })
+        }
+        var settingsObject;
+        function getval() {
+            wskaznik.get().then(function (doc) {
+                if (doc.exists) {
+                    settingsObject = doc.data();
+                    if (settingsObject.alarmPrzyBezruchu) {
+                        // gyro();
+                    }
+                    setCheckboxes()
+                }
+            })
+        }
+        function setCheckboxes() {
+            if (settingsObject.alarmPrzyBezruchu) {
+                document.getElementsByClassName("toggle btn btn-light android")[0].classList.remove("off");
+                document.querySelector("#alarmPrzyBezruchu").checked = settingsObject.alarmPrzyBezruchu;
+            }
+            if (settingsObject.powiadomienia) {
+                document.getElementsByClassName("toggle btn btn-light android")[1].classList.remove("off");
+                document.querySelector("#powiadomienia").checked = settingsObject.powiadomienia;
+            }
+            if (settingsObject.czytaniePowiadomien) {
+                document.getElementsByClassName("toggle btn btn-light android")[2].classList.remove("off");
+                document.querySelector("#czytaniePowiadomien").checked = settingsObject.czytaniePowiadomien;
+            }
+            document.querySelector("#numerAlarmowy").value = settingsObject.numerAlarmowy;
+        }
+        function gyro() {
+            // Update acceleration every 3 seconds
+            var options = { frequency: 10000 };
+            watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+        }
+        function stopWatch() {
+            if (watchID) {
+                navigator.accelerometer.clearWatch(watchID);
+                watchID = null;
+            }
+        }
+        var firstRun = true;
+        var arrayOfMeasurement;
+        var arrayOfMeasurementLater;
+        function onSuccess(acceleration) {
+            if (firstRun) {
+                arrayOfMeasurement = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
+                firstRun = false;
+            } else {
+                arrayOfMeasurementLater = [Math.round(parseInt(acceleration.x)), Math.round(parseInt(acceleration.y)), Math.round(parseInt(acceleration.z))];
+                firstRun = true;
+            }
+            compareMeasurements();
+        }
+        function compareMeasurements() {
+            if (arrayOfMeasurement[0] == arrayOfMeasurementLater[0] && arrayOfMeasurement[1] == arrayOfMeasurementLater[1] && arrayOfMeasurement[2] == arrayOfMeasurementLater[2]) {
+                window.open("tel:" + settingsObject.numerAlarmowy);
+                vibration();
+                speakAPI();
+
+            } else {
+                console.log("everything is fine");
+            }
+        }
+        function onError() {
+            alert('onError!');
+        }
+        function vibration() {
+            navigator.vibrate(1000);
+        }
+        function speakAPI() {
+            textToRead = "Zadzwoń po pomoc"
+                responsiveVoice.speak(textToRead, "Polish Female");
+        }
+    </script>
+</body>
+
+</html>
