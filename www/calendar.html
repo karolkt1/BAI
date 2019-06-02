@@ -30,17 +30,14 @@
                 <h1 class="top-head "></h1>
                 <hr class="page">
                 <h5 class="h5">Tu możesz przegłądać swój kalendarz wydarzeń. <br>
-                    Dla zmian <a href="strona-glowna.html">wróc do głównego menu</a> i wejdźć do strony edycji
+                    Dla zmian <a href="strona-glowna.html">wróc do głównego menu</a> i wejdź do strony edycji
                     kalendarza.</h5>
                 <div class="podaj-data">
                     <h3>Podaj datę</h3>
                     <input type="date" id="date1" oninput="getSelectedDate()"><br><br>
                     <button class="glx-button guzik"><a href="#ex1" rel="modal:open">Dodaj wydarzenie</a></button>
                 </div>
-                <!--        <button type="button" onclick="rebuildCalendar()" class="btn btn-primary">Rebuild Calendar</button>
-        <button type="button" onclick="clearLocalStorage()" class="btn btn-warning">Clear localStorage</button>
-        <button type="button" onclick="enableEditMode()" class="btn btn-warning">Edit Mode</button>
-        <br><br> -->
+
             </div>
             <div class="table">
                 <table class="table" id="table1">
@@ -54,18 +51,6 @@
                 <br>
             </div>
 
-
-
-            <!-- Here begins the risky part -->
-            <!--  <div id="ex1" class="window modal text-center" style="height: 50%">
-        Co chcesz zapisać?<br>
-        <textarea placeholder="Wpisz dane" id="text1"></textarea><br>
-        Podaj godzinę<br>
-        <input type="time" id="time1"><br>
-
-        <a href="#" rel="modal:close" onclick="addDate()">Save & close</a>
-    </div> 
- -->
             <div id="myModalBox" class="modal-fade">
                 <div class="modal-dialog">
                     <div id="ex1" class="window modal text-center">
@@ -91,6 +76,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+    <script src='https://code.responsivevoice.org/responsivevoice.js'> </script>
     <script>
         var userText;
         var userDate;
@@ -129,8 +115,6 @@
 
         getParamsFromUrl();
 
-
-
         class Event {
             constructor(userMessage, userDate, userTime) {
                 this.userMessage = userMessage;
@@ -139,10 +123,7 @@
             }
         }
 
-
-
         var event1;
-
         var tableOfEvents = new Array(24);
 
         var db;
@@ -206,9 +187,6 @@
 
         function fillCallendar() {
             var userHour = parseInt(userTime);
-            // if (userHour > 12) {
-            //     userHour = userHour - 12;
-            // } else
             if (userHour == 0) {
                 userHour = 24;
             }
@@ -258,7 +236,7 @@
                             button.addEventListener("click", function () {
                                 // be careful rows+1
                                 tbl.rows[x].cells[2].previousElementSibling.innerHTML = "";
-                                console.log(x)
+
                                 tableOfEvents[x] = null;
                                 storeObject(tableOfEvents);
                             });
@@ -327,17 +305,14 @@
                 })
 
             }
-
+            speakAPI(jsObjArray);
             return jsObjArray;
+
         }
 
         document.getElementById("date1").addEventListener("change", function () {
             setTimeout(function () {
-
-                // if (isEditModeOn) {
-//                     console.log("abc");
-                    rebuildCalendar();
-                // }
+                rebuildCalendar();
             }, 700);
         });
 
@@ -347,7 +322,6 @@
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // This is how you get settingsObject. It may be necessary to do the same in other files
-
                 wskaznik = db.collection("Dziennik pacjenta").doc(firebase.auth().currentUser.email).collection("Ustawienia").doc("dokument");
 
                 wskaznik.get().then(function (doc) {
@@ -367,6 +341,18 @@
             }
         });
 
+        function speakAPI(param3) {
+            if (settingsObject.czytaniePowiadomien) {
+                var textToRead = "";
+                for (var x = 0; x < param3.length; x++) {
+                    if (param3[x]) {
+                        textToRead += param3[x].userTime + " " + param3[x].userMessage + " . "
+                    }
+                   
+                }
+                responsiveVoice.speak(textToRead, "Polish Female");
+            }
+        };
 
     </script>
 </body>
